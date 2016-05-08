@@ -30,7 +30,11 @@ questions.
     <groupId>com.apps4j.jmh</groupId>
     <artifactId>tests</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>lambdas</module>
+        <module>collection-iteration</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <name>Auto-generated JMH benchmark</name>
 
@@ -54,7 +58,7 @@ questions.
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jmh.version>1.11.2</jmh.version>
+        <jmh.version>1.12</jmh.version>
         <javac.target>1.8</javac.target>
         <uberjar.name>benchmarks</uberjar.name>
     </properties>

@@ -1,4 +1,4 @@
-package com.apps4j.javatests.iteration;
+package com.apps4j.javatests.lambdas;
 
 class Person {
     private String givenName;

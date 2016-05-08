@@ -23,62 +23,54 @@
  * questions.
  */
 
-package com.apps4j.javatests.iteration;
+package com.apps4j.javatests.collection_iteration;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @BenchmarkMode(Mode.AverageTime)
-@OperationsPerInvocation(IterationComparison.N)
+@OperationsPerInvocation(ArrayListIterationComparison.N)
 @Warmup(iterations = 5)
-@Measurement(iterations = 5)
-@State(Scope.Thread)
+//@Measurement(iterations = 5)
 @Fork(3)
-public class IterationComparison {
+public class ArrayListIterationComparison {
 
-    public static final int N = 10000;
+    public static final int N = 100_000;
 
-    public static List<Person> sourceList = new ArrayList<>();
+    @State(Scope.Thread)
+    public static class TestState {
+        public Collection<Integer> sourceList = new ArrayList<>();
 
-    static {
-        for (int i = 0; i < N; i++) {
-            sourceList.add(new Person("test " + i, "test " + i, i, "test " + i, "test " + i, "test " + i));
-        }
-    }
-
-    @Benchmark
-    public void vanilla(Blackhole blackhole) {
-        long totalAge = 0;
-        for (Person p : sourceList) {
-            if (p.getAge() >= 23 && p.getAge() <= 80) {
-                totalAge += p.getAge();
+        @Setup(Level.Invocation)
+        public void setup() {
+            for (int i = 0; i < N; i++) {
+                sourceList.add(i);
             }
         }
-        blackhole.consume(totalAge);
     }
 
     @Benchmark
-    public void stream(Blackhole blackhole) {
-        long totalAge = sourceList
-                .stream()
-                .filter(p -> p.getAge() >= 23 && p.getAge() <= 80)
-                .mapToInt(Person::getAge)
-                .sum();
-        blackhole.consume(totalAge);
+    public void testVanilla(TestState state, Blackhole bh) {
+        for (Integer b : state.sourceList) {
+            bh.consume(b);
+        }
     }
 
     @Benchmark
-    public void parallelStream(Blackhole blackhole) {
-        long totalAge = sourceList
-                .parallelStream()
-                .filter(p -> p.getAge() >= 23 && p.getAge() <= 80)
-                .mapToInt(Person::getAge)
-                .sum();
-        blackhole.consume(totalAge);
+    public void testLambda(TestState state, Blackhole bh) {
+        state.sourceList.forEach(bh::consume);
+    }
+
+    @Benchmark
+    public void testArray(TestState state, Blackhole bh) {
+        for (int i = 0; i < state.sourceList.size(); i++) {
+            bh.consume(state.sourceList);
+
+        }
     }
 }

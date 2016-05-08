@@ -1,4 +1,4 @@
-package com.apps4j.javatests.iteration.input;
+package com.apps4j.javatests.lambdas.input;
 
 import java.util.ArrayList;
 import java.util.Collections;
