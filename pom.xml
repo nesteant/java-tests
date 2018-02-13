@@ -17,5 +17,6 @@
     <modules>
         <module>jmh</module>
         <module>interview-questions</module>
+        <module>spring-edu</module>
     </modules>
 </project>
