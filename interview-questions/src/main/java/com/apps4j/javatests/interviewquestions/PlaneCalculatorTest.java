@@ -28,6 +28,8 @@ public class PlaneCalculatorTest {
                 {"positive", 4, 2, "1A 2F 1C"},
                 {"All busy", 0, 1, "1A 1E 1H"},
                 {"Boundaries", 8 * 3, 10, "1A 1E 1H 10A 10E 10H"},
+                {"Formatting", 8 * 3, 10, "1A     1E 1H 10A       10E 10H"},
+                {"Lowercase letters", 8 * 3, 10, "1a 1e 1h 10a 10e 10h"},
                 {"None busy", 3, 1, ""},
                 {"Zero values", 0, 0, ""},
                 {"Null values 1", 0, 0, null},
@@ -86,7 +88,7 @@ class Solution {
         if (S == null) {
             S = "";
         }
-        String trim = S.trim();
+        String trim = S.trim().toUpperCase();
         String[] occupiedSeats = new String[0];
         if (trim.length() > 0) {
             occupiedSeats = trim.split(" ");
