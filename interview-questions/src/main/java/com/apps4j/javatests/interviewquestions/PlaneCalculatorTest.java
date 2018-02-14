@@ -27,6 +27,9 @@ public class PlaneCalculatorTest {
         return Arrays.asList(new Object[][]{
                 {"positive", 4, 2, "1A 2F 1C"},
                 {"All busy", 0, 1, "1A 1E 1H"},
+                {"All busy2", 0, 0, "1A 1E 1H"},
+                {"All busy3", 0, 5, "1A 1E 1H 2A 2E 2H 3A 3E 3H 4A 4E 4H 5A 5E 5H"},
+                {"All busy duplicates", 0, 2, "1A 1E 1H 2A 2E 2H 1A 1E 1H 2A 2E 2H"},
                 {"Boundaries", 8 * 3, 10, "1A 1E 1H 10A 10E 10H"},
                 {"Formatting", 8 * 3, 10, "1A     1E 1H 10A       10E 10H"},
                 {"Lowercase letters", 8 * 3, 10, "1a 1e 1h 10a 10e 10h"},
